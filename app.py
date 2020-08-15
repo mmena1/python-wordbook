@@ -1,24 +1,34 @@
 #!/usr/bin/env python3
 
-import nltk
+import argparse
 import sys
 
-from nltk.corpus import wordnet as wn
+from core.thesaurus import list_definitions
 
-def main(word):
-    definitions = wn.synsets(word)
-    if not definitions:
-        print(f"{word} is not an English word.")
-    for definition in definitions:
-        index = definitions.index(definition)
-        print(f"{index + 1}. {definition.definition().capitalize()}.")
+def parse_args():
+    # Create the parser
+    my_parser = argparse.ArgumentParser(
+        description='Gets the definition of a word or translates a text or files'
+    )
+    # Add the arguments
+    my_parser.add_argument(
+        '-d',
+        '--list-def',
+        metavar='word',
+        type=str,
+        help='list the definitions of the given word'
+    )
+    return my_parser.parse_args()
 
 if __name__ == "__main__":
-    user_input = sys.argv[1:]
-    if len(user_input) > 1:
-        print("Only one word is allowed.")
-    elif not user_input:
-        text = input("Enter an English word:\n")
-        main(text)
-    else:
-        main(sys.argv[1])
+    if not sys.argv[1:]:
+        text = input(
+            '''Select the option number you like to do:
+            1) Find definitions
+            2) Translate\n'''
+        )
+        if text == '1':
+            list_definitions()
+    args = parse_args()
+    if args.list_def:
+        list_definitions(args.list_def)
