@@ -43,18 +43,20 @@ def parse_args():
 
 if __name__ == "__main__":
     if not sys.argv[1:]:
-        text = input(
-            '''Select the option number you like to do:
-            1) Find definitions
-            2) Translate\n'''
-        )
-        if text == '1':
-            list_definitions()
-        elif text == '2':
-            translate()
-        else:
-            print("Invalid option.")
-            sys.exit(2)
+        while True:
+            text = input(
+                '''Select the option you like to run:
+                1) Find definitions
+                2) Translate\n'''
+            )
+            if text == '1':
+                list_definitions()
+                break
+            elif text == '2':
+                translate()
+                break
+            else:
+                print("Invalid option. Please try again.")
     args = parse_args()
     if args.list_def:
         list_definitions(args.list_def)
