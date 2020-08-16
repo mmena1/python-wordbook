@@ -31,13 +31,13 @@ def parse_args():
         '--from',
         metavar='language',
         type=str,
-        help='uses the suplied language as source'
+        help='uses the supplied language as source'
     )
     my_parser.add_argument(
         '--to',
         metavar='language',
         type=str,
-        help='uses the suplied language as destination'
+        help='uses the supplied language as destination'
     )
     return my_parser.parse_args()
 
