@@ -19,7 +19,10 @@ def translate(*args, **kwargs):
         dest = input('Enter the destination language: ')
         text = input('Enter a text to translate: ')
     else:
-        text = ' '.join(args)
+        if isinstance(args[0], list):
+            text = ' '.join(args[0])
+        else:
+            text = (args[0])
     translator = Translator()
     print(translator.translate(text, dest=dest, source=source).text)
 

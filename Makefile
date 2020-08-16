@@ -1,5 +1,5 @@
 .PHONY: install
 
 install:
-    pipenv install
-    python -m nltk.downloader wordnet
+	pipenv install
+	python -m nltk.downloader wordnet
