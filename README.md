@@ -23,7 +23,7 @@ Nothing in particular, playing a bit with Python as part of my self-training.
 1. Execute the app:
 
     ```bash
-    pipenv run python app.py
+    make run
     ```
 
 ### Dictionary
@@ -32,7 +32,7 @@ To use the dictionary functionality you can do it in 2 ways:
 - Executing the main app:
 
     ```bash
-    $ pipenv run python app.py
+    $ make run
     Select the option you like to run:
                 1) Find definitions
                 2) Translate
@@ -51,18 +51,14 @@ To use the dictionary functionality you can do it in 2 ways:
     7. Metal supports for logs in a fireplace.
     8. Go after with the intent to catch.
     ```
-    You can also use `-d` or `--list-def` flag with a word to get the results directly:
-    ```
-    pipenv run python app.py -d dog
-    ```
 
 - Executing the thesaurus app:
     ```
-    pipenv run python core/dictionary.py
+    pipenv run python wordbook/dictionary.py
     ```
     You can also pass a word directly to get the results:
     ```
-    pipenv run python core/dictionary.py dog
+    pipenv run python wordbook/dictionary.py dog
     ```
 
 ### Translation
@@ -71,7 +67,7 @@ To use the translation functionality you can do it in 3 ways, the same as the th
 - Executing the main app:
 
     ```bash
-    $ pipenv run python app.py
+    $ make run
     Select the option you like to run:
                 1) Find definitions
                 2) Translate
@@ -86,40 +82,27 @@ To use the translation functionality you can do it in 3 ways, the same as the th
     Enter a text to translate: This is awesome!
     ¡Esto es asombroso!
     ```
-    You can also use `-t` or `--translate` flag with an English text to automatically translate it to Spanish (be careful with special characters, you might need to escape them):
+
+- Executing the translate app:
     ```
-    $ pipenv run python app.py -t "This is awesome\!"
+    pipenv run python wordbook/translate.py
+    ```
+    You can also pass an English text to automatically translate it to Spanish (be careful with special characters, you might need to escape them):
+    ```
+    $ pipenv run python wordbook/translate.py "This is awesome\!"
     ¡Esto es asombroso!
     ```
     It's possible to override the source and destination languages with `--from` and `--to` flags respectively:
     ```
-    $ pipenv run python app.py -t "Hola, como estas?" --from es --to de
+    $ pipenv run python wordbook/translate.py "Hola, como estas?" --from es --to de
     Hallo, wie geht es dir?
-    ```
-
-- Executing the translate app:
-    ```
-    pipenv run python core/translate.py
-    ```
-    You can also pass an English text directly to translate it to Spanish:
-    (The text can be a list of parameters or a single string)
-    ```
-    pipenv run python core/translate.py This is awesome\!
-    ```
-    Or
-    ```
-    pipenv run python core/translate.py "This is awesome\!"
     ```
 
 - Translating a file:
 
-    You can use the `-f` or `--file` flag in either the main app or the translate app to translate the contents of a `.txt` file. It will generate a translated file in `output/translated.txt`
+    You can use the `-f` or `--file` flag on the translate app to translate the contents of a `.txt` file. It will generate a translated file in `data/output.txt`
     ```
-    pipenv run python app.py -t -f path/to/file.txt --from es --to de
-    ```
-    Or
-    ```
-    pipenv run python core/translate.py -f path/to/file.txt
+    pipenv run python wordbook/translate.py -f path/to/file.txt --from es --to de
     ```
 
 ## Tests

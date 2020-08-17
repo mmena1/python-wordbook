@@ -1,4 +1,4 @@
-.PHONY: install test
+.PHONY: install test run
 
 install:
 	pipenv install
@@ -6,3 +6,6 @@ install:
 
 test:
 	pipenv run python -m unittest
+
+run:
+	pipenv run python wordbook/runner.py

@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 
 import argparse
+import os
 import sys
+
+# This is required for the tests to see the `util` package
+if os.path.dirname(__file__) not in sys.path:
+    sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from pathlib import Path
 from googletrans import Translator
 from util.io import read_file, write_file
 
-def translate(*args, **kwargs):
-    text = ''
+def translate(**kwargs):
     # Another way to do this is like:
     # source = 'en'
     # try:
@@ -18,15 +22,12 @@ def translate(*args, **kwargs):
     source = 'en' if 'source' not in kwargs else kwargs['source']
     dest = 'es' if 'dest' not in kwargs else kwargs['dest']
     file = None if 'file' not in kwargs else kwargs['file']
-    if not args and not file:
+    text = None if 'text' not in kwargs else kwargs['text']
+    if not text and not file:
         source = input('Enter the source language: ')
         dest = input('Enter the destination language: ')
         text = input('Enter a text to translate: ')
-    elif args and isinstance(args[0], list):
-        text = ' '.join(args[0])
-    elif args and isinstance(args[0], str):
-        text = (args[0])
-    else:
+    elif file:
         if isinstance(file, str) and not Path(file).is_file():
             return 'Please provide a valid path to a file'
         if isinstance(file, str) and Path(file).suffix != '.txt':
@@ -34,13 +35,31 @@ def translate(*args, **kwargs):
         text = read_file(file)
     translated_text = Translator().translate(text, dest=dest, source=source).text
     if file:
-        output_file = 'output/translated.txt' if 'output' not in kwargs else kwargs['output']
+        output_file = 'data/output.txt' if 'output' not in kwargs else kwargs['output']
         write_file(translated_text, output_file)
     return translated_text
 
 if __name__ == '__main__':
     my_parser = argparse.ArgumentParser(
         description='Translates a text or files'
+    )
+    my_parser.add_argument(
+        'text',
+        type=str,
+        nargs='?',
+        help='a text to be translated'
+    )
+    my_parser.add_argument(
+        '--from',
+        metavar='language',
+        type=str,
+        help='uses the supplied language as source'
+    )
+    my_parser.add_argument(
+        '--to',
+        metavar='language',
+        type=str,
+        help='uses the supplied language as destination'
     )
     my_parser.add_argument(
         '-f',
@@ -51,8 +70,12 @@ if __name__ == '__main__':
     )
     args = my_parser.parse_args()
     kwargs = {}
+    if args.text:
+        kwargs['text'] = args.text
+    if getattr(args, 'from'):
+        kwargs['source'] = getattr(args, 'from')
+    if args.to:
+        kwargs['dest'] = args.to
     if args.file:
         kwargs['file'] = args.file
-        print(translate(**kwargs))
-    else:
-         print(translate(sys.argv[1:]))
+    print(translate(**kwargs))

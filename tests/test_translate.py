@@ -1,12 +1,12 @@
 import io
 import unittest
 from unittest import mock
-from core.translate import translate
+from wordbook.translate import translate
 
 
 class TestTranslate(unittest.TestCase):
 
-    @mock.patch('core.translate.Translator')
+    @mock.patch('wordbook.translate.Translator')
     def test_translate_file(self, mock_translator):
         attrs = {'text.return_value': 'Quiero traducir esto'}
         mock_translator().translate.return_value = mock.Mock(text='Quiero traducir esto')
