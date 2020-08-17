@@ -1,5 +1,10 @@
-# Python thesaurus app
-This app uses [wordnet](https://www.nltk.org/howto/wordnet.html) in order to find definitions to English words provided by the user. Similar to [this](http://wordnetweb.princeton.edu/perl/webwn).
+# Python wordbook app
+
+This app has two functions: a dictionary and a text translator.
+
+- For the dictionary, it uses [wordnet](https://www.nltk.org/howto/wordnet.html) in order to find definitions to English words provided by the user. Similar to [this](http://wordnetweb.princeton.edu/perl/webwn).
+
+- For the translation, it uses [`googletrans`](https://pypi.org/project/googletrans/) which implements the Google Translate API.
 
 ## Why?
 Nothing in particular, playing a bit with Python as part of my self-training.
@@ -21,8 +26,8 @@ Nothing in particular, playing a bit with Python as part of my self-training.
     pipenv run python app.py
     ```
 
-### Thesaurus
-To use the thesaurus functionality you can do it in 2 ways:
+### Dictionary
+To use the dictionary functionality you can do it in 2 ways:
 
 - Executing the main app:
 
@@ -53,15 +58,15 @@ To use the thesaurus functionality you can do it in 2 ways:
 
 - Executing the thesaurus app:
     ```
-    pipenv run python core/thesaurus.py
+    pipenv run python core/dictionary.py
     ```
     You can also pass a word directly to get the results:
     ```
-    pipenv run python core/thesaurus.py dog
+    pipenv run python core/dictionary.py dog
     ```
 
 ### Translation
-To use the translation functionality you can do it in 2 ways, the same as the thesaurus:
+To use the translation functionality you can do it in 3 ways, the same as the thesaurus, but with an additional file input:
 
 - Executing the main app:
 
@@ -105,3 +110,20 @@ To use the translation functionality you can do it in 2 ways, the same as the th
     ```
     pipenv run python core/translate.py "This is awesome\!"
     ```
+
+- Translating a file:
+
+    You can use the `-f` or `--file` flag in either the main app or the translate app to translate the contents of a `.txt` file. It will generate a translated file in `output/translated.txt`
+    ```
+    pipenv run python app.py -t -f path/to/file.txt --from es --to de
+    ```
+    Or
+    ```
+    pipenv run python core/translate.py -f path/to/file.txt
+    ```
+
+## Tests
+You can run the unit tests with:
+```
+make test
+```

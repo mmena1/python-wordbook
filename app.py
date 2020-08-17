@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from core.thesaurus import list_definitions
+from core.dictionary import list_definitions
 from core.translate import translate
 
 def parse_args():
@@ -25,6 +25,7 @@ def parse_args():
         metavar='text',
         nargs='?',
         type=str,
+        default=True,
         help='translates to Spanish the provided English text'
     )
     my_parser.add_argument(
@@ -38,6 +39,13 @@ def parse_args():
         metavar='language',
         type=str,
         help='uses the supplied language as destination'
+    )
+    my_parser.add_argument(
+        '-f',
+        '--file',
+        metavar='path_to_file',
+        type=str,
+        help='translates the provided file'
     )
     return my_parser.parse_args()
 
@@ -53,7 +61,7 @@ if __name__ == "__main__":
                 list_definitions()
                 break
             elif text == '2':
-                translate()
+                print(translate())
                 break
             else:
                 print("Invalid option. Please try again.")
@@ -66,4 +74,6 @@ if __name__ == "__main__":
             kwargs['source'] = getattr(args, 'from')
         if args.to:
             kwargs['dest'] = args.to
-        translate(args.translate, **kwargs)
+        if args.file:
+            kwargs['file'] = args.file
+        print(translate(args.translate, **kwargs))
