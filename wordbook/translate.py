@@ -31,9 +31,9 @@ def translate(**kwargs):
         text = input('Enter a text to translate: ')
     elif file:
         if isinstance(file, str) and not Path(file).is_file():
-            return 'Please provide a valid path to a file'
+            raise TranslateException('Please provide a valid path to a file')
         if isinstance(file, str) and Path(file).suffix != '.txt':
-            return 'Only .txt files are allowed'
+            raise TranslateException('Only .txt files are allowed')
         text = read_file(file)
     translated_text = ""
     try:

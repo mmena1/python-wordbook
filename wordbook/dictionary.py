@@ -27,7 +27,6 @@ def list_definitions(word=None):
                 print(f'{i + 1}. {definition.definition().capitalize()}.')
 
 if __name__ == '__main__':
-    args = sys.argv[1:]
-    if len(args) > 1:
+    if len(args := sys.argv[1:]) > 1:
         raise DictionaryException('Only one word is allowed.')
     list_definitions(args[0])
