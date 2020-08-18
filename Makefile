@@ -2,7 +2,7 @@
 
 install:
 	pipenv install
-	python -m nltk.downloader wordnet
+	pipenv run python -m nltk.downloader wordnet
 
 test:
 	pipenv run python -m unittest
