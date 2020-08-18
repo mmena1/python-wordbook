@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import argparse
 import sys
 
 from dictionary import list_definitions
@@ -12,23 +11,23 @@ if __name__ == "__main__":
         while True:
             try:
                 text = input(
-                    '''Select the option you like to run:
+                    """Select the option you like to run:
                     1) Find definitions
-                    2) Translate\n'''
+                    2) Translate\n"""
                 )
-                if text == '1':
+                if text == "1":
                     list_definitions()
                     break
-                elif text == '2':
+                elif text == "2":
                     print(translate())
                     break
                 else:
-                    print('Invalid option. Please try again.')
+                    print("Invalid option. Please try again.")
             except (DictionaryException, TranslateException) as e:
                 print(e.message)
             except ApiException:
-                print('There was an error with the API call, please fix it ASAP!')
+                print("There was an error with the API call, please fix it ASAP!")
                 raise
             except KeyboardInterrupt:
-                print('\nGoodbye!')
+                print("\nGoodbye!")
                 break

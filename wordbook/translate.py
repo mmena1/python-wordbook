@@ -14,6 +14,7 @@ from googletrans import Translator
 from exceptions import ApiException, TranslateException
 from util.io import read_file, write_file
 
+
 def translate(**kwargs):
     # Another way to do this is like:
     # source = 'en'
@@ -21,70 +22,68 @@ def translate(**kwargs):
     #     source = kwargs['source']
     # except KeyError:
     #     pass
-    source = 'en' if 'source' not in kwargs else kwargs['source']
-    dest = 'es' if 'dest' not in kwargs else kwargs['dest']
-    file = None if 'file' not in kwargs else kwargs['file']
-    text = None if 'text' not in kwargs else kwargs['text']
+    source = "en" if "source" not in kwargs else kwargs["source"]
+    dest = "es" if "dest" not in kwargs else kwargs["dest"]
+    file = None if "file" not in kwargs else kwargs["file"]
+    text = None if "text" not in kwargs else kwargs["text"]
     if not text and not file:
-        source = input('Enter the source language: ')
-        dest = input('Enter the destination language: ')
-        text = input('Enter a text to translate: ')
+        source = input("Enter the source language: ")
+        dest = input("Enter the destination language: ")
+        text = input("Enter a text to translate: ")
     elif file:
         if isinstance(file, str) and not Path(file).is_file():
-            raise TranslateException('Please provide a valid path to a file')
-        if isinstance(file, str) and Path(file).suffix != '.txt':
-            raise TranslateException('Only .txt files are allowed')
+            raise TranslateException("Please provide a valid path to a file")
+        if isinstance(file, str) and Path(file).suffix != ".txt":
+            raise TranslateException("Only .txt files are allowed")
         text = read_file(file)
     translated_text = ""
     try:
         translated_text = Translator().translate(text, dest=dest, source=source).text
     except ValueError as verror:
-        raise TranslateException('The source or destination language is invalid.') from verror
+        raise TranslateException(
+            "The source or destination language is invalid."
+        ) from verror
     except Exception as ex:
-        raise ApiException('An error ocurred while connecting with the API') from ex
+        raise ApiException("An error ocurred while connecting with the API") from ex
     else:
         if file:
-            output_file = 'data/output.txt' if 'output' not in kwargs else kwargs['output']
+            output_file = (
+                "data/output.txt" if "output" not in kwargs else kwargs["output"]
+            )
             write_file(translated_text, output_file)
         return translated_text
 
-if __name__ == '__main__':
-    my_parser = argparse.ArgumentParser(
-        description='Translates a text or files'
+
+if __name__ == "__main__":
+    my_parser = argparse.ArgumentParser(description="Translates a text or files")
+    my_parser.add_argument("text", type=str, nargs="?", help="a text to be translated")
+    my_parser.add_argument(
+        "--from",
+        metavar="language",
+        type=str,
+        help="uses the supplied language as source",
     )
     my_parser.add_argument(
-        'text',
+        "--to",
+        metavar="language",
         type=str,
-        nargs='?',
-        help='a text to be translated'
+        help="uses the supplied language as destination",
     )
     my_parser.add_argument(
-        '--from',
-        metavar='language',
+        "-f",
+        "--file",
+        metavar="path_to_file",
         type=str,
-        help='uses the supplied language as source'
-    )
-    my_parser.add_argument(
-        '--to',
-        metavar='language',
-        type=str,
-        help='uses the supplied language as destination'
-    )
-    my_parser.add_argument(
-        '-f',
-        '--file',
-        metavar='path_to_file',
-        type=str,
-        help='translates the provided file'
+        help="translates the provided file",
     )
     args = my_parser.parse_args()
     kwargs = {}
     if args.text:
-        kwargs['text'] = args.text
-    if getattr(args, 'from'):
-        kwargs['source'] = getattr(args, 'from')
+        kwargs["text"] = args.text
+    if getattr(args, "from"):
+        kwargs["source"] = getattr(args, "from")
     if args.to:
-        kwargs['dest'] = args.to
+        kwargs["dest"] = args.to
     if args.file:
-        kwargs['file'] = args.file
+        kwargs["file"] = args.file
     print(translate(**kwargs))

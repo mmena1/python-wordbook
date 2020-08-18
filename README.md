@@ -52,7 +52,7 @@ To use the dictionary functionality you can do it in 2 ways:
     8. Go after with the intent to catch.
     ```
 
-- Executing the thesaurus app:
+- Executing the dictionary app:
     ```
     pipenv run python wordbook/dictionary.py
     ```
@@ -62,7 +62,7 @@ To use the dictionary functionality you can do it in 2 ways:
     ```
 
 ### Translation
-To use the translation functionality you can do it in 3 ways, the same as the thesaurus, but with an additional file input:
+To use the translation functionality you can do it in 3 ways, the same as the dictionary, but with an additional file input:
 
 - Executing the main app:
 
@@ -109,4 +109,8 @@ To use the translation functionality you can do it in 3 ways, the same as the th
 You can run the unit tests with:
 ```
 make test
+```
+You can also format and lint the code with:
+```
+make lint
 ```

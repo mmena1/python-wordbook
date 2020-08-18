@@ -1,7 +1,8 @@
-.PHONY: install test run
+.PHONY: install test run lint
 
 install:
-	pipenv install
+	# --pre is required for black
+	pipenv install --pre
 	pipenv run python -m nltk.downloader wordnet
 
 test:
@@ -9,3 +10,7 @@ test:
 
 run:
 	pipenv run python wordbook/runner.py
+
+lint:
+	pipenv run black .
+	pipenv run flake8
