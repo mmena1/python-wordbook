@@ -53,8 +53,7 @@ def translate(**kwargs):
             write_file(translated_text, output_file)
         return translated_text
 
-
-if __name__ == "__main__":
+def main():
     my_parser = argparse.ArgumentParser(description="Translates a text or files")
     my_parser.add_argument("text", type=str, nargs="?", help="a text to be translated")
     my_parser.add_argument(
@@ -87,3 +86,6 @@ if __name__ == "__main__":
     if args.file:
         kwargs["file"] = args.file
     print(translate(**kwargs))
+
+if __name__ == "__main__":
+    main()
